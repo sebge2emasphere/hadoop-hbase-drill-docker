@@ -29,5 +29,14 @@ do
 done
 
 
-# create a new Bash session in the master container
-sudo docker exec -it master.krejcmat.com bash
+echo "start drill master container..."
+sudo docker exec -it master.krejcmat.com /bin/sh -c  "/root/start-drill.sh"
+
+
+i=1
+while [ $i -le $N ]
+do
+	echo "start drill slave$i container..."
+	sudo docker exec -it slave$i.krejcmat.com /bin/sh -c  "/root/start-drill.sh"
+	((i++))
+done
